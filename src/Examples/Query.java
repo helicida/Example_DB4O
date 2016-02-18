@@ -6,7 +6,9 @@ package Examples;
 import com.db4o.*;
 
 public class Query {
+
     public static void main(String[] args) throws Exception {
+
         ObjectContainer db = null;
 
         try {
