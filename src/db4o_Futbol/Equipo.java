@@ -1,12 +1,16 @@
 package db4o_Futbol;
 
+import java.util.ArrayList;
+
 /**
  * Created by 46465442z on 18/02/16.
  */
 public class Equipo {
 
-    private String nombre;  // Nombre del equipo
-    private String estadio; // Nombre del estadio del equipo
+    private String nombre;                      // Nombre del equipo
+    private String estadio;                     // Nombre del estadio del equipo
+    private Entrenador entrenadorEquipo;        // Entrenador del equipo
+    private ArrayList<Jugador> listaJugadores;  // Lista con los jugadores del equipo
 
     // Constructores
 
