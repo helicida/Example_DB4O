@@ -5,8 +5,8 @@ package db4o_Futbol;
  */
 public class Entrenador {
 
-    private String nombre;
-    private byte anyoExperiencia;
+    private String nombre;        // Nombre del entrenador
+    private byte anyoExperiencia; // Anyos de experiencia
 
     // Constructores
 

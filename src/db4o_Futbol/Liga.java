@@ -5,9 +5,9 @@ package db4o_Futbol;
  */
 public class Liga {
 
-    private String nombre;
-    private byte categoria;
-    private String patrocinador;
+    private String nombre;          // Nombre de la liga
+    private byte categoria;         // Categoría de la liga
+    private String patrocinador;    // Patrocinador de la liga
 
     // Constructores
 

@@ -5,8 +5,8 @@ package db4o_Futbol;
  */
 public class Equipo {
 
-    private String nombre;
-    private String estadio;
+    private String nombre;  // Nombre del equipo
+    private String estadio; // Nombre del estadio del equipo
 
     // Constructores
 

@@ -5,11 +5,11 @@ package db4o_Futbol;
  */
 public class Caracteristicas {
 
-    private String agilidad;
-    private String fuerza;
-    private String velocidad;
-    private String pase;
-    private String penalti;
+    private String agilidad;    // Agilidad del jugador
+    private String fuerza;      // fuerza del jugador
+    private String velocidad;   // velocidad del jugador
+    private String pase;        // pase del jugador
+    private String penalti;     // precision en los penaltis del jugador
 
     // Constructores
 

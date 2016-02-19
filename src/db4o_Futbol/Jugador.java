@@ -5,10 +5,10 @@ package db4o_Futbol;
  */
 public class Jugador {
 
-    private String DNI;
-    private String nombre;
-    private String apellido;
-    private double altura;
+    private String DNI;         // DNI del jugador
+    private String nombre;      // Nombre del jugador
+    private String apellido;    // Apellido del jugador
+    private double altura;      // altura del jugador
 
     // Constructores
 
