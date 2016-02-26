@@ -19,22 +19,33 @@ public class Controller {
 
             System.out.println("\n");
             System.out.println("MENU:");
+
+            System.out.println("---------------LIGA------------------");
+            System.out.println("1 - Crear liga");
+            System.out.println("2 - Anyadir equipo");
+
+            System.out.println("----------------EQUIPO---------------");
+            System.out.println("5 - Crear equipo");
+            System.out.println("6 - Anyadir entrenador");
+            System.out.println("7 - Anyadir jugadores");
+            System.out.println("8 - An");
+
             System.out.println("--------------JUGADORES--------------");
             System.out.println("1 - Crear jugador");
             System.out.println("2 - Retirar un jugador");
             System.out.println("3 - Traspasar un jugador");
+            System.out.println("4 - Crear características");
             System.out.println("---------------EQUIPO----------------");
-            System.out.println("4 - Crear equipo");
-            System.out.println("5 - Anyadir entrenador");
-            System.out.println("---------------");
+
             System.out.println("--------------CONSULTAS--------------");
-            System.out.println("5 - Consultar jugadores de un equipo");
-            System.out.println("6 - Consultar Jugadores de dos equipos solicitados (SODA).");
-            System.out.println("7 - Consultar jugadores de un equipo con Fuerza menor o igual que 5.");
-            System.out.println("4 - Consultar Jugadores pertenecientes a una Liga.");
-            System.out.println("5 - Consultar características de un jugador.");
+            System.out.println("8 - Consultar jugadores de un equipo");
+            System.out.println("9 - Consultar Jugadores de dos equipos solicitados (SODA).");
+            System.out.println("10 - Consultar jugadores de un equipo con Fuerza menor o igual que 5.");
+            System.out.println("11 - Consultar Jugadores pertenecientes a una Liga.");
+            System.out.println("12 - Consultar características de un jugador.");
             System.out.println("6 - Consultar jugadores que entrena un entrenador.");
             System.out.println("7 - Equipos de una liga en concreto");
+
             System.out.println("0 - Sortir ");
 
             opcio = teclat.nextInt();
