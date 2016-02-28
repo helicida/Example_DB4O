@@ -1,14 +1,20 @@
 package db4o_Futbol;
 
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+
+import java.util.Scanner;
+
 /**
  * Created by 46465442z on 18/02/16.
  */
 public class Jugador {
 
-    private String DNI;         // DNI del jugador
-    private String nombre;      // Nombre del jugador
-    private String apellido;    // Apellido del jugador
-    private double altura;      // altura del jugador
+    private String DNI;                             // DNI del jugador
+    private String nombre;                          // Nombre del jugador
+    private String apellido;                        // Apellido del jugador
+    private double altura;                          // altura del jugador
+    private Caracteristicas caracteristicasJugador; // Características del jugador
 
     // Constructores
 
@@ -23,11 +29,11 @@ public class Jugador {
 
     }
 
-    public void SeRetira(){
-
-    }
-
     // Metodos
+
+    public void SeRetira(ObjectContainer database){
+        database.delete(this);
+    }
 
     public void traspas(){
 
@@ -51,6 +57,12 @@ public class Jugador {
         return altura;
     }
 
+    public Caracteristicas getCaracteristicasJugador() {
+        return caracteristicasJugador;
+    }
+
+
+
     // Setters
 
     public void setDNI(String DNI) {
@@ -67,5 +79,9 @@ public class Jugador {
 
     public void setAltura(double altura) {
         this.altura = altura;
+    }
+
+    public void setCaracteristicasJugador(Caracteristicas caracteristicasJugador) {
+        this.caracteristicasJugador = caracteristicasJugador;
     }
 }

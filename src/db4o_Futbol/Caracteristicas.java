@@ -5,11 +5,11 @@ package db4o_Futbol;
  */
 public class Caracteristicas {
 
-    private String agilidad;    // Agilidad del jugador
-    private String fuerza;      // fuerza del jugador
-    private String velocidad;   // velocidad del jugador
-    private String pase;        // pase del jugador
-    private String penalti;     // precision en los penaltis del jugador
+    private byte agilidad;    // Agilidad del jugador
+    private byte fuerza;      // fuerza del jugador
+    private byte velocidad;   // velocidad del jugador
+    private byte pase;        // pase del jugador
+    private byte penalti;     // precision en los penaltis del jugador
 
     // Constructores
 
@@ -17,7 +17,7 @@ public class Caracteristicas {
 
     }
 
-    public Caracteristicas(String agilidad, String fuerza, String velocidad, String pase, String penalti){
+    public Caracteristicas(byte agilidad, byte fuerza, byte velocidad, byte pase, byte penalti){
         this.agilidad = agilidad;
         this.fuerza = fuerza;
         this.velocidad = velocidad;
@@ -33,45 +33,45 @@ public class Caracteristicas {
 
     // Getters
 
-    public String getAgilidad() {
+    public byte getAgilidad() {
         return agilidad;
     }
 
-    public String getFuerza() {
+    public byte getFuerza() {
         return fuerza;
     }
 
-    public String getVelocidad() {
+    public byte getVelocidad() {
         return velocidad;
     }
 
-    public String getPase() {
+    public byte getPase() {
         return pase;
     }
 
-    public String getPenalti() {
+    public byte getPenalti() {
         return penalti;
     }
 
     // Setters
 
-    public void setAgilidad(String agilidad) {
+    public void setAgilidad(byte agilidad) {
         this.agilidad = agilidad;
     }
 
-    public void setFuerza(String fuerza) {
+    public void setFuerza(byte fuerza) {
         this.fuerza = fuerza;
     }
 
-    public void setVelocidad(String velocidad) {
+    public void setVelocidad(byte velocidad) {
         this.velocidad = velocidad;
     }
 
-    public void setPase(String pase) {
+    public void setPase(byte pase) {
         this.pase = pase;
     }
 
-    public void setPenalti(String penalti) {
+    public void setPenalti(byte penalti) {
         this.penalti = penalti;
     }
 }

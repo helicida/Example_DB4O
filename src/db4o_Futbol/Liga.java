@@ -30,16 +30,39 @@ public class Liga {
 
     }
 
-    public void anyadirEquipo(){
+    // Getters
 
+    public String getNombre() {
+        return nombre;
     }
 
-    public void eliminarEquipo(){
-
+    public byte getCategoria() {
+        return categoria;
     }
 
-    public void cambiarEquipo(){
-        anyadirEquipo();
-        eliminarEquipo();
+    public String getPatrocinador() {
+        return patrocinador;
+    }
+
+    public ArrayList<Equipo> getListaEquipos() {
+        return listaEquipos;
+    }
+
+    // Setters
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCategoria(byte categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setPatrocinador(String patrocinador) {
+        this.patrocinador = patrocinador;
+    }
+
+    public void setListaEquipos(ArrayList<Equipo> listaEquipos) {
+        this.listaEquipos = listaEquipos;
     }
 }
