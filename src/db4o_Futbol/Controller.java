@@ -39,20 +39,14 @@ public class Controller {
             System.out.println("6 - Cambiar entrenador");
             System.out.println("7 - Cambiar liga");
 
-
-            /*
-            System.out.println("---------------LIGA------------------");
-
-            System.out.println("---------------EQUIPO----------------");
-
             System.out.println("--------------CONSULTAS--------------");
             System.out.println("8 - Consultar jugadores de un equipo");
             System.out.println("9 - Consultar Jugadores de dos equipos solicitados (SODA).");
             System.out.println("10 - Consultar jugadores de un equipo con Fuerza menor o igual que 5.");
             System.out.println("11 - Consultar Jugadores pertenecientes a una Liga.");
             System.out.println("12 - Consultar características de un jugador.");
-            System.out.println("6 - Consultar jugadores que entrena un entrenador.");
-            System.out.println("7 - Equipos de una liga en concreto"); */
+            System.out.println("13 - Consultar jugadores que entrena un entrenador.");
+            System.out.println("14 - Equipos de una liga en concreto");
 
             System.out.println("0 - Sortir ");
 
@@ -96,6 +90,44 @@ public class Controller {
                 break;
 
                 case 7:
+                    // Cambiar equipo de liga
+                    cambiarEquipoDeLiga();
+                break;
+
+                case 8:
+                    // Consultar jugadores de un equipo
+                    System.out.println("Introduce el nombre del equipo del que quieres ver los jugadores");
+                        String nombreEquipo = teclat.next();
+
+                    imprimirJugadoresDeEquipo(nombreEquipo);
+                break;
+
+                case 9:
+                    // Consultar Jugadores de dos equipos solicitados (SODA)
+                    cambiarEquipoDeLiga();
+                break;
+
+                case 10:
+                    // Consultar jugadores de un equipo con Fuerza menor o igual que 5.
+                    jugadoresDeEquipoFueraMenorCinco();
+                break;
+
+                case 11:
+                    // Consultar Jugadores pertenecientes a una Liga.
+
+                break;
+
+                case 12:
+                    // Consultar características de un jugador.
+                    caracteristicasDeUnJugador();
+                break;
+
+                case 13:
+                    // Consultar jugadores que entrena un entrenador
+                    jugadoresDeUnEntrenador();
+                break;
+
+                case 14:
                     // Cambiar equipo de liga
                     cambiarEquipoDeLiga();
                 break;
@@ -180,7 +212,7 @@ public class Controller {
         // Preparamos el objeto para hacer la queryByExample
         Jugador byExample = new Jugador();
         byExample.setDNI(DNI);
-        
+
         ObjectSet jugadores = database.queryByExample(new Jugador());
         Jugador selected = null;
 
