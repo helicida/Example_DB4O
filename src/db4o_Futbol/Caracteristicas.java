@@ -74,4 +74,15 @@ public class Caracteristicas {
     public void setPenalti(byte penalti) {
         this.penalti = penalti;
     }
+
+    // ToString
+
+    public String toString()  {
+        return "CARACTERISTICAS:" +
+                "\n Agilidad: " + agilidad +
+                "\n Fuerza: " + fuerza +
+                "\n Velocidad: " + velocidad +
+                "\n Pase: " + pase +
+                "\n Penalti: " + penalti;
+    }
 }

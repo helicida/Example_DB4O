@@ -1,9 +1,6 @@
 package db4o_Futbol;
 
 import com.db4o.ObjectContainer;
-import com.db4o.ObjectSet;
-
-import java.util.Scanner;
 
 /**
  * Created by 46465442z on 18/02/16.

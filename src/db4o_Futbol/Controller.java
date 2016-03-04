@@ -3,6 +3,7 @@ package db4o_Futbol;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Query;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +77,6 @@ public class Controller {
                 case 4:
                     // Retirar jugador
                     reitrarJugador();
-
                 break;
 
                 case 5:
@@ -104,7 +104,7 @@ public class Controller {
 
                 case 9:
                     // Consultar Jugadores de dos equipos solicitados (SODA)
-                    cambiarEquipoDeLiga();
+                    jugadoresDeDosEquiposSODA();
                 break;
 
                 case 10:
@@ -130,6 +130,11 @@ public class Controller {
                 case 14:
                     // Cambiar equipo de liga
                     cambiarEquipoDeLiga();
+                break;
+
+                case 15:
+                    // Anyadir jugador a un equipo
+                    anyadirJugadorAUnEquipo();
                 break;
             }
         }
@@ -392,6 +397,59 @@ public class Controller {
         desconectarBBDD("Se ha guardado un equipo correctamente");
     }
 
+    public static void anyadirJugadorAUnEquipo(){
+
+        // Teclat
+        Scanner teclat = new Scanner(System.in);
+
+        // Pedimos el nombre del equipo y del entrenador
+        System.out.println("Introduce el nombre del equipo al que le quieres anyadir un jugador (String)");
+        String nombreEquipo = teclat.next();
+        System.out.println("Introduce el DNI del jugador(String)");
+        String DNI = teclat.next();
+
+        // Conectamos a la base de datos
+        conectarBBBDD();
+
+        // Preparamos nuestro objeto para hacer la queryByExample
+        Jugador jugadorIteracion = null;
+        ObjectSet jugadores = database.queryByExample(new Jugador());
+
+        // Con un for buscamos el equipo
+        for (int iterador = 0; iterador < jugadores.size(); iterador++) {
+
+            jugadorIteracion = (Jugador) jugadores.get(iterador);
+
+            // Añadimos el jugador a la BBDD
+            if (jugadorIteracion.getDNI().equals(DNI)) {
+                // Una vez encontrado el jugador, cortamos el bucle
+                break;
+            }
+        }
+
+        // Preparamos el objeto para hacer la queryByExample
+        Equipo equipoIteracion = null;
+        ObjectSet equipos = database.queryByExample(new Equipo());
+
+        // Buscamos el equipo al que irá nuestro jugador
+        for (int iterador = 0; iterador < equipos.size(); iterador++) {
+
+            equipoIteracion = (Equipo) equipos.get(iterador);
+
+            // Eliminamos el antiguo equipo y lo volvemos a anyadir actualizado
+            if (equipoIteracion.getNombre().equals(nombreEquipo)) {
+                equipoIteracion.anyadirJugador(jugadorIteracion);
+                desconectarBBDD(null);
+
+                break;
+            }
+        }
+
+
+
+
+    }
+
     public static void cambiarEntrenadorDeEquipo()  {
 
         // Teclat
@@ -651,6 +709,45 @@ public class Controller {
         imprimirJugadoresDeEquipo(equipo1);
         imprimirJugadoresDeEquipo(equipo2);
     }
+
+    public static void jugadoresDeDosEquiposSODA(){
+
+        // Teclado
+        Scanner teclat = new Scanner(System.in);
+
+        // Pedimos el nombre de los equipos
+         System.out.println("Introduce el nombre del equipo 1:");
+            String equipo1 = teclat.nextLine();
+
+         System.out.println("Introduce el nombre del equipo 2:");
+            String equipo2 = teclat.nextLine();
+
+         // Preparamos el queryByExample
+         ObjectSet<Equipo> debuger1 = database.queryByExample(new Equipo(equipo1, null));
+         ObjectSet<Equipo> debuger2 = database.queryByExample(new Equipo(equipo2, null));
+
+         if(debuger1.hasNext() && debuger2.hasNext()){
+
+             // Imprimimos los jugadores
+
+             Query q = database.query();
+             q.constrain(new Equipo(equipo1, null));
+
+             ObjectSet<Equipo> result1 = q.execute();
+             imprimirJugadoresDeEquipo(result1.next().getNombre());
+
+             Query q1 = database.query();
+             q1.constrain(new Equipo(equipo2, null));
+
+             ObjectSet<Equipo> result2 = q1.execute();
+             imprimirJugadoresDeEquipo(result2.next().getNombre());
+
+         }
+         else {
+             System.out.println("Los equipos no existen o no tienen jugadores");
+         }
+    }
+
 
     public static void imprimirJugadoresDeEquipo(String nombreEquipo)  {
 

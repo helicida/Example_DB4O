@@ -10,7 +10,6 @@ public class Liga {
     private String nombre;          // Nombre de la liga
     private byte categoria;         // Categoría de la liga
     private String patrocinador;    // Patrocinador de la liga
-    ArrayList<Equipo> listaEquipos; // ArrayList con la lista de equipos de la liga
 
     // Constructores
 
@@ -44,9 +43,6 @@ public class Liga {
         return patrocinador;
     }
 
-    public ArrayList<Equipo> getListaEquipos() {
-        return listaEquipos;
-    }
 
     // Setters
 
@@ -62,7 +58,12 @@ public class Liga {
         this.patrocinador = patrocinador;
     }
 
-    public void setListaEquipos(ArrayList<Equipo> listaEquipos) {
-        this.listaEquipos = listaEquipos;
+    // ToString
+
+    public String toString()  {
+        return "LIGA:" +
+                "\n Nombre: " + nombre +
+                "\n Categoria: " + categoria +
+                "\n Patrocinador: " + patrocinador;
     }
 }

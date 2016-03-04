@@ -45,4 +45,14 @@ public class Entrenador {
     public void setAnyoExperiencia(byte anyoExperiencia) {
         this.anyoExperiencia = anyoExperiencia;
     }
+
+
+    // ToString
+
+    public String toString()  {
+        return "ENTRENADOR:" +
+                "\n Nombre: " + nombre +
+                "\n Años experiencia: " + anyoExperiencia;
+    }
+
 }

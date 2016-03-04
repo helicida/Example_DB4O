@@ -78,4 +78,13 @@ public class Equipo {
     public void setListaJugadores(ArrayList<Jugador> listaJugadores) {
         this.listaJugadores = listaJugadores;
     }
+
+    // ToString
+
+    public String toString()  {
+        return "EQUIPO:" +
+                "\n Nombre: " + nombre +
+                "\n Estadio: " + estadio +
+                "\n Entrenador: " + entrenadorEquipo;
+    }
 }
