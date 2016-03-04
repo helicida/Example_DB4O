@@ -7,13 +7,14 @@ import java.util.ArrayList;
  */
 public class Liga {
 
-    private String nombre;          // Nombre de la liga
-    private byte categoria;         // Categoría de la liga
-    private String patrocinador;    // Patrocinador de la liga
+    private String nombre;                                  // Nombre de la liga
+    private int categoria;                                 // Categoría de la liga
+    private String patrocinador;                            // Patrocinador de la liga
+    private ArrayList<Equipo> equipos = new ArrayList<>();  // Equipos que contiene la liga
 
     // Constructores
 
-    public Liga(String nombre, byte categoria, String patrocinador){
+    public Liga(String nombre, int categoria, String patrocinador){
         this.nombre = nombre;
         this.categoria = categoria;
         this.patrocinador = patrocinador;
@@ -25,6 +26,10 @@ public class Liga {
 
     // Métodes
 
+    public void anyadirEqupio(Equipo equipoAnyadir){
+        equipos.add(equipoAnyadir);
+    }
+
     public void cambioPatrocinador(){
 
     }
@@ -35,7 +40,7 @@ public class Liga {
         return nombre;
     }
 
-    public byte getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
@@ -43,6 +48,9 @@ public class Liga {
         return patrocinador;
     }
 
+    public ArrayList<Equipo> getEquipos() {
+        return equipos;
+    }
 
     // Setters
 
@@ -50,7 +58,7 @@ public class Liga {
         this.nombre = nombre;
     }
 
-    public void setCategoria(byte categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 

@@ -81,4 +81,14 @@ public class Jugador {
     public void setCaracteristicasJugador(Caracteristicas caracteristicasJugador) {
         this.caracteristicasJugador = caracteristicasJugador;
     }
+
+    // To String
+
+    public String toString(){
+        return "\nJUGADOR:" +
+                "\n DNI: " + nombre +
+                "\n Nombre: " + nombre +
+                "\n Apellido: " + apellido +
+                "\n Altura: " + altura;
+    }
 }

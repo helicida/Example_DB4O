@@ -10,14 +10,15 @@ public class Equipo {
     private String nombre;                      // Nombre del equipo
     private String estadio;                     // Nombre del estadio del equipo
     private Entrenador entrenadorEquipo;        // Entrenador del equipo
-    private ArrayList<Jugador> listaJugadores;  // Lista con los jugadores del equipo
+    private ArrayList<Jugador> listaJugadores = new ArrayList<>();  // Lista con los jugadores del equipo
     private Liga liga;                          // Liga en la que está el equipo
 
     // Constructores
 
-    public Equipo(String nombre, String estadio){
+    public Equipo(String nombre, String estadio, Entrenador entrenador){
         this.nombre = nombre;
         this.estadio = estadio;
+        this.entrenadorEquipo = entrenador;
     }
 
     public Equipo(){
@@ -82,9 +83,23 @@ public class Equipo {
     // ToString
 
     public String toString()  {
+
+        String jugadors = "";
+
+        int contador = 0;
+
+        while(contador < listaJugadores.size()){
+
+            jugadors = jugadors + "\n" + listaJugadores.get(contador).toString();
+
+            contador ++;
+        }
+
         return "EQUIPO:" +
                 "\n Nombre: " + nombre +
                 "\n Estadio: " + estadio +
-                "\n Entrenador: " + entrenadorEquipo;
+                "\n Entrenador: " + entrenadorEquipo +
+                "\n" + jugadors;
+
     }
 }

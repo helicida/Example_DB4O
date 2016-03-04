@@ -6,11 +6,11 @@ package db4o_Futbol;
 public class Entrenador {
 
     private String nombre;        // Nombre del entrenador
-    private byte anyoExperiencia; // Anyos de experiencia
+    private int anyoExperiencia; // Anyos de experiencia
 
     // Constructores
 
-    public Entrenador(String nombre, byte anyoExperiencia){
+    public Entrenador(String nombre, int anyoExperiencia){
         this.nombre = nombre;
         this.anyoExperiencia = anyoExperiencia;
     }
@@ -31,7 +31,7 @@ public class Entrenador {
         return nombre;
     }
 
-    public byte getAnyoExperiencia() {
+    public int getAnyoExperiencia() {
         return anyoExperiencia;
     }
 
@@ -42,7 +42,7 @@ public class Entrenador {
         this.nombre = nombre;
     }
 
-    public void setAnyoExperiencia(byte anyoExperiencia) {
+    public void setAnyoExperiencia(int anyoExperiencia) {
         this.anyoExperiencia = anyoExperiencia;
     }
 

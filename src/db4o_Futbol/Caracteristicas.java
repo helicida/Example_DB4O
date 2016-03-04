@@ -5,11 +5,11 @@ package db4o_Futbol;
  */
 public class Caracteristicas {
 
-    private byte agilidad;    // Agilidad del jugador
-    private byte fuerza;      // fuerza del jugador
-    private byte velocidad;   // velocidad del jugador
-    private byte pase;        // pase del jugador
-    private byte penalti;     // precision en los penaltis del jugador
+    private int agilidad;    // Agilidad del jugador
+    private int fuerza;      // fuerza del jugador
+    private int velocidad;   // velocidad del jugador
+    private int pase;        // pase del jugador
+    private int penalti;     // precision en los penaltis del jugador
 
     // Constructores
 
@@ -17,7 +17,7 @@ public class Caracteristicas {
 
     }
 
-    public Caracteristicas(byte agilidad, byte fuerza, byte velocidad, byte pase, byte penalti){
+    public Caracteristicas(int agilidad, int fuerza, int velocidad, int pase, int penalti){
         this.agilidad = agilidad;
         this.fuerza = fuerza;
         this.velocidad = velocidad;
@@ -33,45 +33,45 @@ public class Caracteristicas {
 
     // Getters
 
-    public byte getAgilidad() {
+    public int getAgilidad() {
         return agilidad;
     }
 
-    public byte getFuerza() {
+    public int getFuerza() {
         return fuerza;
     }
 
-    public byte getVelocidad() {
+    public int getVelocidad() {
         return velocidad;
     }
 
-    public byte getPase() {
+    public int getPase() {
         return pase;
     }
 
-    public byte getPenalti() {
+    public int getPenalti() {
         return penalti;
     }
 
     // Setters
 
-    public void setAgilidad(byte agilidad) {
+    public void setAgilidad(int agilidad) {
         this.agilidad = agilidad;
     }
 
-    public void setFuerza(byte fuerza) {
+    public void setFuerza(int fuerza) {
         this.fuerza = fuerza;
     }
 
-    public void setVelocidad(byte velocidad) {
+    public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
     }
 
-    public void setPase(byte pase) {
+    public void setPase(int pase) {
         this.pase = pase;
     }
 
-    public void setPenalti(byte penalti) {
+    public void setPenalti(int penalti) {
         this.penalti = penalti;
     }
 

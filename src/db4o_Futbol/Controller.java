@@ -7,6 +7,7 @@ import com.db4o.query.Query;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,7 +19,14 @@ public class Controller {
 
     public static void main(String[] args) {
 
+        // Instanciamos nuesto object container a traves de la clase auxiliar para hacer consultas
+        database = DatabaseConn.getInstance();
+
+        // Anyadimos los equipos ya hecho
+        anyadirEjemplos(database);
+
         //Controler que gestiona la BBDD
+        
         // Menú
         Scanner teclat = new Scanner(System.in);
 
@@ -41,13 +49,17 @@ public class Controller {
             System.out.println("7 - Cambiar liga");
 
             System.out.println("--------------CONSULTAS--------------");
-            System.out.println("8 - Consultar jugadores de un equipo");
-            System.out.println("9 - Consultar Jugadores de dos equipos solicitados (SODA).");
-            System.out.println("10 - Consultar jugadores de un equipo con Fuerza menor o igual que 5.");
-            System.out.println("11 - Consultar Jugadores pertenecientes a una Liga.");
-            System.out.println("12 - Consultar características de un jugador.");
-            System.out.println("13 - Consultar jugadores que entrena un entrenador.");
-            System.out.println("14 - Equipos de una liga en concreto");
+            System.out.println(" 8 - Jugadores de un equipo solicitado");
+            System.out.println(" 9 - Jugadores de dos equipos solicitados utilizando una consulta SODA");
+            System.out.println(" 10 - Los jugadores de un equipo que tenga una Fuerza menor o igual que 5");
+            System.out.println(" 11 - Equipos y jugadores pertenecientes a una Liga");
+            System.out.println(" 12 - Características de un jugador dado");
+            System.out.println(" 13 - Jugadores que pertenece a un entrenador dado");
+            System.out.println(" 14 - Visualizar equipos");
+
+            System.out.println("// RANDOM");
+            System.out.println("-----------------------------------------");
+            System.out.println("15 - Añadir jugador a un equipo");
 
             System.out.println("0 - Sortir ");
 
@@ -61,37 +73,37 @@ public class Controller {
 
                 case 1:
                     // Crear jugador
-                    crearJugador();
+                    crearJugador(database);
                 break;
 
                 case 2:
                     // Aumentar caracteristicas jugador
-                    aumentarCaracteristicas();
+                    aumentarCaracteristicas(database);
                 break;
 
                 case 3:
                     // Traspasar jugador
-                    traspasarJugador();
+                    traspasarJugador(database);
                 break;
 
                 case 4:
                     // Retirar jugador
-                    reitrarJugador();
+                    reitrarJugador(database);
                 break;
 
                 case 5:
                     // Crear equipo
-                    crearEquipo();
+                    crearEquipo(database);
                 break;
 
                 case 6:
                     // Cambiar entrenador
-                    cambiarEntrenadorDeEquipo();
+                    cambiarEntrenadorDeEquipo(database);
                 break;
 
                 case 7:
                     // Cambiar equipo de liga
-                    cambiarEquipoDeLiga();
+                    cambiarEquipoDeLiga(database);
                 break;
 
                 case 8:
@@ -99,42 +111,42 @@ public class Controller {
                     System.out.println("Introduce el nombre del equipo del que quieres ver los jugadores");
                         String nombreEquipo = teclat.next();
 
-                    imprimirJugadoresDeEquipo(nombreEquipo);
+                    imprimirJugadoresDeEquipo(database, nombreEquipo);
                 break;
 
                 case 9:
                     // Consultar Jugadores de dos equipos solicitados (SODA)
-                    jugadoresDeDosEquiposSODA();
+                    jugadoresDeDosEquiposSODA(database);
                 break;
 
                 case 10:
                     // Consultar jugadores de un equipo con Fuerza menor o igual que 5.
-                    jugadoresDeEquipoFueraMenorCinco();
+                    jugadoresDeEquipoFueraMenorCinco(database);
                 break;
 
                 case 11:
                     // Consultar Jugadores pertenecientes a una Liga.
-
+                    jugadoresEnLiga(database);
                 break;
 
                 case 12:
                     // Consultar características de un jugador.
-                    caracteristicasDeUnJugador();
+                    caracteristicasDeUnJugador(database);
                 break;
 
                 case 13:
                     // Consultar jugadores que entrena un entrenador
-                    jugadoresDeUnEntrenador();
+                    jugadoresDeUnEntrenador(database);
                 break;
 
                 case 14:
-                    // Cambiar equipo de liga
-                    cambiarEquipoDeLiga();
+                    // Jugadores y equipos de una liga
+                    visualizarEquipos(database);
                 break;
 
                 case 15:
                     // Anyadir jugador a un equipo
-                    anyadirJugadorAUnEquipo();
+                    anyadirJugadorAUnEquipo(database);
                 break;
             }
         }
@@ -142,7 +154,7 @@ public class Controller {
 
     // Jugadores
 
-    public static void crearJugador() {
+    public static void crearJugador(ObjectContainer database) {
 
         // Abrimos el teclado
         Scanner teclat = new Scanner(System.in);
@@ -171,36 +183,36 @@ public class Controller {
 
         // Pedimos las características
 
-        System.out.println("Introduce la agilidad del jugador (Byte)");
-            Byte agilidad = teclat.nextByte();
+        System.out.println("Introduce la agilidad del jugador (int)");
+            int agilidad = teclat.nextInt();
             caracteristicasJugador.setAgilidad(agilidad);
 
-        System.out.println("Introduce la fuerza del jugador (Byte)");
-            Byte fuerza = teclat.nextByte();
+        System.out.println("Introduce la fuerza del jugador (int)");
+            int fuerza = teclat.nextInt();
             caracteristicasJugador.setFuerza(fuerza);
 
-        System.out.println("Introduce la velocidad del jugador (Byte)");
-            Byte velocidad = teclat.nextByte();
+        System.out.println("Introduce la velocidad del jugador (int)");
+            int velocidad = teclat.nextInt();
             caracteristicasJugador.setVelocidad(velocidad);
 
-        System.out.println("Introduce el pase del jugador (Byte)");
-            Byte pase = teclat.nextByte();
+        System.out.println("Introduce el pase del jugador (int)");
+            int pase = teclat.nextInt();
             caracteristicasJugador.setPase(pase);
 
-        System.out.println("Introduce el penalti del jugador (Byte)");
-            Byte penalti = teclat.nextByte();
+        System.out.println("Introduce el penalti del jugador (int)");
+            int penalti = teclat.nextInt();
             caracteristicasJugador.setPenalti(penalti);
 
         // Le asignamos las caracteristicas al jugador
         jugador.setCaracteristicasJugador(caracteristicasJugador);
 
         // Conectamos a la base de datos, anyadimos los datos y cerramos la conexion
-        conectarBBBDD();
+
         database.store(jugador);
-        desconectarBBDD("Se ha añadido un jugador correctamente");
+
     }
 
-    public static void aumentarCaracteristicas() {
+    public static void aumentarCaracteristicas(ObjectContainer database) {
 
         // Teclado
         Scanner teclat = new Scanner(System.in);
@@ -208,11 +220,8 @@ public class Controller {
         // Pedmis el DNI del jugador y el valor
         System.out.println("Introduce el DNI del jugador (String)");
             String DNI = teclat.nextLine();
-        System.out.println("En que valor quieres aumentar las cracteristicas? (Byte)");
-            Byte puntosAumentar = teclat.nextByte();
-
-        // Conectamos con la base de datos
-        conectarBBBDD();
+        System.out.println("En que valor quieres aumentar las cracteristicas? (int)");
+            int puntosAumentar = teclat.nextInt();
 
         // Preparamos el objeto para hacer la queryByExample
         Jugador byExample = new Jugador();
@@ -228,31 +237,26 @@ public class Controller {
 
             if (selected.getDNI().equals(DNI)) {
 
-                // Los bytes no se pueden sumar de manera tradicional con el operador "+"
+                // Los ints no se pueden sumar de manera tradicional con el operador "+"
                 // es necesario castarlos a su tipo de datos
 
                 Caracteristicas caracteristicas = ((Jugador) jugadores.get(iterador)).getCaracteristicasJugador();
-                caracteristicas.setPenalti((byte) (caracteristicas.getPenalti() + puntosAumentar));
-                caracteristicas.setPase((byte) (caracteristicas.getPase() + puntosAumentar));
-                caracteristicas.setVelocidad((byte) (caracteristicas.getVelocidad() + puntosAumentar));
-                caracteristicas.setFuerza((byte) (caracteristicas.getFuerza() + puntosAumentar));
-                caracteristicas.setAgilidad((byte) (caracteristicas.getAgilidad() + puntosAumentar));
+                caracteristicas.setPenalti((int) (caracteristicas.getPenalti() + puntosAumentar));
+                caracteristicas.setPase((int) (caracteristicas.getPase() + puntosAumentar));
+                caracteristicas.setVelocidad((int) (caracteristicas.getVelocidad() + puntosAumentar));
+                caracteristicas.setFuerza((int) (caracteristicas.getFuerza() + puntosAumentar));
+                caracteristicas.setAgilidad((int) (caracteristicas.getAgilidad() + puntosAumentar));
                 selected.setCaracteristicasJugador(caracteristicas);
                 database.delete(jugadores.get(iterador));
 
-                // cerramos la conexión con la base de datos
-                desconectarBBDD(null);
                 break;
             }
         }
 
-        // Conectamos a la base de datos, anyadimos los datos y cerramos la conexion
-        conectarBBBDD();
         database.store(selected);
-        desconectarBBDD("Se han aumentado las caracteristicas" + puntosAumentar + " puntos");
     }
 
-    public static void reitrarJugador(){
+    public static void reitrarJugador(ObjectContainer database){
 
         // Retirar jugador
         Scanner teclat = new Scanner(System.in);
@@ -264,9 +268,6 @@ public class Controller {
         // Preparamos el objeto para hacer la queryByExample
         Jugador byExample = new Jugador();
         byExample.setDNI(DNI);
-
-        // Conectamos a la base de datos
-        conectarBBBDD();
 
         // Preparamos el objeto para hacer la queryByExample
         ObjectSet jugadores = database.queryByExample(new Jugador());
@@ -281,12 +282,9 @@ public class Controller {
                 database.delete(jugadorIteracion);
             }
         }
-
-        // Cerramos la conexion con la base de datos
-        desconectarBBDD(null);
     }
 
-    public static void traspasarJugador() {
+    public static void traspasarJugador(ObjectContainer database) {
 
         // Traspasar jugador
         Scanner teclat = new Scanner(System.in);
@@ -297,9 +295,6 @@ public class Controller {
 
         System.out.println("Introduce el nombre del equipo al que va a ser traspasado (String)");
             String nombreEquipo = teclat.nextLine();
-
-        // Conectamos la BBDD
-        conectarBBBDD();
 
         // Preparamos nuestro objeto para hacer la queryByExample
         Jugador jugadorIteracion = null;
@@ -329,21 +324,18 @@ public class Controller {
             // Eliminamos el antiguo equipo y lo volvemos a anyadir actualizado
             if (equipoIteracion.getNombre().equals(nombreEquipo)) {
                 database.delete(equipoIteracion);
-                desconectarBBDD(null);
                 equipoIteracion.anyadirJugador(jugadorIteracion);
                 break;
             }
         }
 
         // Traspasamos el jugador
-        conectarBBBDD();
         database.store(equipoIteracion);
-        desconectarBBDD("Se ha traspasado el jugador " + jugadorIteracion.getNombre() + " al equipo " + equipoIteracion.getNombre());
     }
 
     // Equipo
 
-    public static void crearEquipo() {
+    public static void crearEquipo(ObjectContainer database) {
 
         // Abrimos el teclado
         Scanner teclat = new Scanner(System.in);
@@ -359,8 +351,8 @@ public class Controller {
             String nombreLiga = teclat.next();
             liga.setNombre(nombreLiga);
 
-        System.out.println("Introduce la categoria de la liga (Byte)");
-            Byte categoriaLiga = teclat.nextByte();
+        System.out.println("Introduce la categoria de la liga (int)");
+            int categoriaLiga = teclat.nextInt();
             liga.setCategoria(categoriaLiga);
 
         System.out.println("Introduce el nombre del patrocinador de la liga (String)");
@@ -383,8 +375,8 @@ public class Controller {
             String nombreEntrenador = teclat.next();
             entrenador.setNombre(nombreEntrenador);
 
-        System.out.println("Introduce los años de experiencia del entrenador (Byte)");
-            Byte anyoExperiencia = teclat.nextByte();
+        System.out.println("Introduce los años de experiencia del entrenador (int)");
+            int anyoExperiencia = teclat.nextInt();
             entrenador.setAnyoExperiencia(anyoExperiencia);
 
         // Le asignamos al equipo su liga y su entrenador
@@ -392,12 +384,10 @@ public class Controller {
         equipo.setLiga(liga);
 
         // Añadimos el Equipo a la BBDD
-        conectarBBBDD();
         database.store(equipo);
-        desconectarBBDD("Se ha guardado un equipo correctamente");
     }
 
-    public static void anyadirJugadorAUnEquipo(){
+    public static void anyadirJugadorAUnEquipo(ObjectContainer database){
 
         // Teclat
         Scanner teclat = new Scanner(System.in);
@@ -407,9 +397,6 @@ public class Controller {
         String nombreEquipo = teclat.next();
         System.out.println("Introduce el DNI del jugador(String)");
         String DNI = teclat.next();
-
-        // Conectamos a la base de datos
-        conectarBBBDD();
 
         // Preparamos nuestro objeto para hacer la queryByExample
         Jugador jugadorIteracion = null;
@@ -439,18 +426,12 @@ public class Controller {
             // Eliminamos el antiguo equipo y lo volvemos a anyadir actualizado
             if (equipoIteracion.getNombre().equals(nombreEquipo)) {
                 equipoIteracion.anyadirJugador(jugadorIteracion);
-                desconectarBBDD(null);
-
                 break;
             }
         }
-
-
-
-
     }
 
-    public static void cambiarEntrenadorDeEquipo()  {
+    public static void cambiarEntrenadorDeEquipo(ObjectContainer database)  {
 
         // Teclat
         Scanner teclat = new Scanner(System.in);
@@ -460,9 +441,6 @@ public class Controller {
             String nombreEquipo = teclat.next();
         System.out.println("Introduce el nombre del nuevo entrenador(String)");
             String nombreEntrenador = teclat.next();
-
-        // Conectamos a la base de datos
-        conectarBBBDD();
 
         // Preparamos el objeto para la queryByExample
         ObjectSet equipos = database.queryByExample(new Equipo());
@@ -477,20 +455,15 @@ public class Controller {
                 Entrenador entrenador = ((Equipo) equipos.get(iterador)).getEntrenadorEquipo();
                 entrenador.setNombre(nombreEntrenador);
                 database.delete(equipos.get(iterador));
-
-                // Cerramos la conexion con la BBDD
-                desconectarBBDD(null);
                 break;
             }
         }
 
         // Y guardamos los cambios en la BBDD
-        conectarBBBDD();
         database.store(equipoIteracion);
-        desconectarBBDD(nombreEntrenador + " es el nuevo entrenador de " + nombreEquipo);
     }
 
-    public static void cambiarEquipoDeLiga() {
+    public static void cambiarEquipoDeLiga(ObjectContainer database) {
 
         // Teclado
         Scanner teclat = new Scanner(System.in);
@@ -501,9 +474,6 @@ public class Controller {
 
         System.out.println("Introduce el nombre de Liga (String)");
             String nombreLiga = teclat.nextLine();
-
-        // Conectamos a la bbdd
-        conectarBBBDD();
 
         // Preparamos el objeto para hacer la queryByExample
         ObjectSet equipos = database.queryByExample(new Equipo());
@@ -519,66 +489,60 @@ public class Controller {
                 Liga liga = ((Equipo) equipos.get(iterador)).getLiga();
                 liga.setNombre(nombreLiga);
                 database.delete(equipos.get(iterador));
-
-                // Desconectamos de la BBDD
-                desconectarBBDD(null);
                 break;
             }
         }
 
-        // Guardamos los cambios en la base de datos
-        conectarBBBDD();
         database.store(equipoIteracion);
-        desconectarBBDD("Se ha cambiado correctamente al " + equipoIteracion.getNombre() + " de Liga");
     }
 
     // Ligas
 
-    public static void cambiarPatrocinadorLiga()  {
+    private static void jugadoresEnLiga(ObjectContainer db) {
 
         // Teclado
         Scanner teclat = new Scanner(System.in);
 
-        // Pedimos el nombre del equipo y del nuevo patrocinador
-        System.out.println("Introduce el nombre del equipo al que le quieres cambiar el patrocinador (String)");
-            String nombreEquipo = teclat.nextLine();
+        System.out.println("Introduce el nombre de la liga: (String)");
+            String liga = teclat.nextLine();
 
-        System.out.println("Introduce el nombre del nuevo patrocinador (String)");
-            String nombrePatrocinador = teclat.nextLine();
+        ObjectSet<Liga> result = db.queryByExample(new Liga(liga, 0, null));
 
-        // Conectamos a la BBDD
-        conectarBBBDD();
+        // Si no hay resultado hacemos saltar la excepción
+        if(!result.hasNext()){
 
-        // Preparamos el objeto para la queryByExample
-        ObjectSet equipos = database.queryByExample(new Equipo());
-        Equipo equipoIteracion = null;
+            try {
+                throw new Exception("No se ha encontrado la liga");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            // Creo un list que lleno con los equipos (ponemos cero porque debería ser el primer resultado)
+            List<Equipo> equipos = result.get(0).getEquipos();
 
-        // Recorremos todos los equipos hasta que encontramos el que buscamos
-        for (int iterador = 0; iterador < equipos.size(); iterador++) {
-
-            equipoIteracion = (Equipo) equipos.get(iterador);
-
-            if (equipoIteracion.getNombre().equals(nombreEquipo)) {
-
-                Liga liga = ((Equipo) equipos.get(iterador)).getLiga();
-                liga.setPatrocinador(nombrePatrocinador);
-                database.delete(equipos.get(iterador));
-
-                // Desconectamos la BBDD
-                desconectarBBDD(null);
-                break;
+            // Si equipos está vacío saltamos otra excepción
+            if(equipos.isEmpty()){
+                try {
+                    throw new Exception("No hay ningun equipo en esta liga");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                // Y si hay resultados lo imprimimos
+                for(int iterador = 0; iterador < equipos.size(); iterador++) {
+                    System.out.println(equipos.get(iterador).toString());
+                    iterador++;
+                }
             }
         }
 
-        // Guardamos los cambios en la BBDD y cerramos la conexión
-        conectarBBBDD();
-        database.store(equipoIteracion);
-        desconectarBBDD("Se ha cambiado el patrocinador correctamente por " +  nombrePatrocinador);
     }
 
     // Querys
 
-    public static void caracteristicasDeUnJugador()  {
+    public static void caracteristicasDeUnJugador(ObjectContainer database)  {
 
         // Características que tiene un jugador
 
@@ -588,9 +552,6 @@ public class Controller {
         // Pedimos el nombre del jugador
         System.out.println("Nombre del jugador Jugador (String)");
             String nombreJugador = teclat.nextLine();
-
-        // Conectamos a la bbdd
-        conectarBBBDD();
 
         // Objeto para la queryByExample
         ObjectSet jugadores = database.queryByExample(new Jugador());
@@ -612,7 +573,7 @@ public class Controller {
         }
     }
 
-    public static void jugadoresDeUnEntrenador()  {
+    public static void jugadoresDeUnEntrenador(ObjectContainer database)  {
 
         // Jugadores que entrena un entrenador
 
@@ -625,9 +586,6 @@ public class Controller {
 
         // Objeto para la queryByExample
         ObjectSet equipos = database.queryByExample(new Equipo());
-
-        // Conectamos a la BBDD
-        conectarBBBDD();
 
         // Y imprimimos todos los jugadores del entrenador con el for
 
@@ -648,7 +606,7 @@ public class Controller {
         }
     }
 
-    public static void jugadoresDeEquipoFueraMenorCinco() {
+    public static void jugadoresDeEquipoFueraMenorCinco(ObjectContainer database) {
 
         // Jugadores de un equipo que tengan una fuerza menor o igual que cinco
 
@@ -659,58 +617,49 @@ public class Controller {
         System.out.println("Introduce el nombre del equipo (String)");
             String nombreEquipo = teclat.nextLine();
 
-        // Conectamos a la BBDD
-        conectarBBBDD();
-
         // Objeto para la queryByExample
-        ObjectSet equipos = database.queryByExample(new Equipo());
+        ObjectSet<Equipo> equipos = database.queryByExample(new Equipo(nombreEquipo, null, null));
         Equipo equipoIteracion = null;
 
-        // Buscamos nuestro equipo con el for
-        for (int iterador = 0; iterador < equipos.size(); iterador++) {
-
-            equipoIteracion = (Equipo) equipos.get(iterador);
-
-            if (equipoIteracion.getNombre().equals(nombreEquipo)) {
-                // Una vez encontrado el equipo cortamos el bucle
-                break;
-            }
-        }
-
         // E imprimimos todos sus jugadores con el nuevo for
-
         System.out.println();
         System.out.println("Jugadores en el equipo: " +  nombreEquipo + " con una fuerza igual o menor que 5");
-        System.out.println("--------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
 
-        for (int iterador = 0; iterador < equipoIteracion.getListaJugadores().size(); iterador++) {
-            if (equipoIteracion.getListaJugadores().get(iterador).getCaracteristicasJugador().getFuerza() <= 5) {
-                System.out.println(equipoIteracion.getListaJugadores().get(iterador).toString());
+        // Si no hay resultados hacemos saltar la excepción
+        if(!equipos.hasNext()){
+
+            try {
+                throw new Exception("No se ha encontrado el equipo o no tiene jugadores");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
             }
         }
+        else{
+            // Sacamos la lista de jugadores
+            List<Jugador> jugadores = equipos.get(0).getListaJugadores();
 
-        // Cerramos la conexión a la BBDD
-        database.close();
+            boolean encontrado = false;
+
+            for(int iterador = 0; iterador < jugadores.size(); iterador++) {
+
+                if(jugadores.get(iterador).getCaracteristicasJugador().getFuerza() <= 5){
+
+                    encontrado = true;
+
+                    System.out.print(jugadores.get(iterador).getNombre() + " fuerza: " + jugadores.get(iterador).getCaracteristicasJugador().getFuerza() + "\n");
+                }
+            }
+
+            // Si no se ha enctrado nada lo imprimimos por pantalla
+            if(!encontrado) {
+                System.out.println("No hay ningun jugador que cumpla los parametros de la consulta");
+            }
+        }
     }
 
-    public static void jugadoresDeDosEquipos() {
-
-        // Imprime los jugadores de dos equipos
-
-        Scanner teclat = new Scanner(System.in);
-
-        // Introducimos los dos equipos
-        System.out.println("Nombre equipo 1 (String)");
-            String equipo1 = teclat.nextLine();
-        System.out.println("Nombre equipo 2 (String)");
-            String equipo2 = teclat.nextLine();
-
-        // Mostramos los jugadores
-        imprimirJugadoresDeEquipo(equipo1);
-        imprimirJugadoresDeEquipo(equipo2);
-    }
-
-    public static void jugadoresDeDosEquiposSODA(){
+    public static void jugadoresDeDosEquiposSODA(ObjectContainer database){
 
         // Teclado
         Scanner teclat = new Scanner(System.in);
@@ -723,24 +672,25 @@ public class Controller {
             String equipo2 = teclat.nextLine();
 
          // Preparamos el queryByExample
-         ObjectSet<Equipo> debuger1 = database.queryByExample(new Equipo(equipo1, null));
-         ObjectSet<Equipo> debuger2 = database.queryByExample(new Equipo(equipo2, null));
+         ObjectSet<Equipo> equipo1Os = database.queryByExample(new Equipo(equipo1, null, null));
+         ObjectSet<Equipo> equipo2Os = database.queryByExample(new Equipo(equipo2, null, null));
 
-         if(debuger1.hasNext() && debuger2.hasNext()){
+        // Comprobamos si hay resultados
+         if(equipo1Os.hasNext() && equipo2Os.hasNext()){
 
              // Imprimimos los jugadores
 
-             Query q = database.query();
-             q.constrain(new Equipo(equipo1, null));
+             Query query1 = database.query();
+             query1.constrain(new Equipo(equipo1, null, null));
 
-             ObjectSet<Equipo> result1 = q.execute();
-             imprimirJugadoresDeEquipo(result1.next().getNombre());
+             ObjectSet<Equipo> result1 = query1.execute();
+             imprimirJugadoresDeEquipo(database, result1.next().getNombre());
 
-             Query q1 = database.query();
-             q1.constrain(new Equipo(equipo2, null));
+             Query query2 = database.query();
+             query2.constrain(new Equipo(equipo2, null, null));
 
-             ObjectSet<Equipo> result2 = q1.execute();
-             imprimirJugadoresDeEquipo(result2.next().getNombre());
+             ObjectSet<Equipo> result2 = query2.execute();
+             imprimirJugadoresDeEquipo(database, result2.next().getNombre());
 
          }
          else {
@@ -748,28 +698,34 @@ public class Controller {
          }
     }
 
+    private static void visualizarEquipos(ObjectContainer db) {
 
-    public static void imprimirJugadoresDeEquipo(String nombreEquipo)  {
+        // Muestra todos los equipos
+
+        ObjectSet<Equipo> equipos = db.queryByExample(Equipo.class);
+
+        System.out.println();
+        System.out.println("Equipos de la BBDD:");
+        System.out.println("----------------------------");
+
+        // Con un iterador recorremos todos los equipos y los vamos imprimiendo en pantalla
+
+        int iterador = 0;
+
+        while(equipos.hasNext()){
+            System.out.println("- " + equipos.get(iterador).getNombre());
+            iterador++;
+        }
+
+    }
+
+    public static void imprimirJugadoresDeEquipo(ObjectContainer database, String nombreEquipo)  {
 
         // Imprime todos los jugadores de un equipo concreto
 
-        // Conectamos a la BBDD
-        conectarBBBDD();
-
         // Objeto para la queryByExample
-        ObjectSet equipos = database.queryByExample(new Equipo());
+        ObjectSet equipos = database.queryByExample(new Equipo(nombreEquipo, null, null));
         Equipo equipoIteracion = null;
-
-        // Buscamos el equipo que queremos con el for
-        for (int iterador = 0; iterador < equipos.size(); iterador++) {
-
-            equipoIteracion = (Equipo) equipos.get(iterador);
-
-            if (equipoIteracion.getNombre().equals(nombreEquipo)) {
-                // Una vez encontrado el equipo cortamos el bucle
-                break;
-            }
-        }
 
         // Imprimimos todos los jugadores del equipo con el for
 
@@ -777,12 +733,103 @@ public class Controller {
         System.out.println("Jugadores en el equipo: " +  nombreEquipo);
         System.out.println("--------------------------------------------------------");
 
-        for (int iterador = 0; iterador < equipoIteracion.getListaJugadores().size(); iterador++) {
-            System.out.println("Jugador " + (iterador + 1) + ": " + equipoIteracion.getListaJugadores().get(iterador).toString());
+        // Buscamos el equipo que queremos con el for
+        while (equipos.hasNext()) {
+            System.out.println(equipos.next().toString());
+        }
+    }
+
+
+
+    public static void anyadirEjemplos(ObjectContainer database){
+
+        // Método auxiliar con algunos datos que se anyaden automaticamente a la BBDD
+
+        // Jugadores predefinidos
+        Jugador jugador1 = new Jugador("31237123q", "J1", "Apellido1", 2000);
+        Jugador jugador2 = new Jugador("87654321A", "J2", "Apellido2", 1946);
+        Jugador jugador3 = new Jugador("13123123e", "J3", "Apellido3", 1934);
+        Jugador jugador4 = new Jugador("1241234132d", "J4", "Apellido4", 1958);
+        Jugador jugador5 = new Jugador("23123123r", "J5", "Apellido5", 1976);
+
+        // Entrenadores predefinidos
+        Entrenador entrenadorBarsa = new Entrenador("Guardiola", (int) 20);
+        Entrenador entrenadorAtleti = new Entrenador("Mourinho", (int) 3);
+
+        // Equipos predefinidos
+        Equipo equipo1 = new Equipo("Barça", "Camp Nou", entrenadorBarsa);
+        Equipo equipo2 = new Equipo("Atleti", "Calderon", entrenadorAtleti);
+
+        // Ligas predefinidas
+        Liga liga1 = new Liga("LFP", 1, "Burdel La Jamelga");
+        Liga liga2 = new Liga("2a Division", 2, "Apple");
+
+        //Caracteristicas de los jugadores
+
+        Caracteristicas carJugador1 = new Caracteristicas(6, 3, 6, 6, 6);
+        Caracteristicas carJugador2 = new Caracteristicas(4, 4, 2, 1, 9);
+
+        jugador1.setCaracteristicasJugador(carJugador1);
+        jugador2.setCaracteristicasJugador(carJugador2);
+        jugador3.setCaracteristicasJugador(carJugador1);
+        jugador4.setCaracteristicasJugador(carJugador2);
+        jugador5.setCaracteristicasJugador(carJugador1);
+
+        jugador1.getCaracteristicasJugador().setFuerza(6);
+        jugador2.getCaracteristicasJugador().setFuerza(6);
+
+        // Anyadimos los jugadores a equipos
+
+        equipo1.anyadirJugador(jugador1);
+        equipo1.anyadirJugador(jugador2);
+
+        equipo1.anyadirJugador(jugador3);
+        equipo2.anyadirJugador(jugador4);
+        equipo2.anyadirJugador(jugador5);
+
+        // Anyadimos los equipos a ligas
+
+        liga1.anyadirEqupio(equipo1);
+        liga1.anyadirEqupio(equipo2);
+
+        database.store(liga1);
+        database.commit();
+
+    }
+
+    // Otros metodos que no he implementado en el menú
+
+    public static void cambiarPatrocinadorLiga(ObjectContainer database)  {
+
+        // Teclado
+        Scanner teclat = new Scanner(System.in);
+
+        // Pedimos el nombre del equipo y del nuevo patrocinador
+        System.out.println("Introduce el nombre del equipo al que le quieres cambiar el patrocinador (String)");
+        String nombreEquipo = teclat.nextLine();
+
+        System.out.println("Introduce el nombre del nuevo patrocinador (String)");
+        String nombrePatrocinador = teclat.nextLine();
+
+        // Preparamos el objeto para la queryByExample
+        ObjectSet equipos = database.queryByExample(new Equipo());
+        Equipo equipoIteracion = null;
+
+        // Recorremos todos los equipos hasta que encontramos el que buscamos
+        for (int iterador = 0; iterador < equipos.size(); iterador++) {
+
+            equipoIteracion = (Equipo) equipos.get(iterador);
+
+            if (equipoIteracion.getNombre().equals(nombreEquipo)) {
+
+                Liga liga = ((Equipo) equipos.get(iterador)).getLiga();
+                liga.setPatrocinador(nombrePatrocinador);
+                database.delete(equipos.get(iterador));
+                break;
+            }
         }
 
-        // Cerramos la conexión con la BBDD
-        database.close();
+        database.store(equipoIteracion);
     }
 
     //Métodos para la BBDD
@@ -815,6 +862,23 @@ public class Controller {
             System.out.println(mensaje);
             System.out.println();
         }
+    }
+
+    public static void jugadoresDeDosEquipos(ObjectContainer database) {
+
+        // Imprime los jugadores de dos equipos
+
+        Scanner teclat = new Scanner(System.in);
+
+        // Introducimos los dos equipos
+        System.out.println("Nombre equipo 1 (String)");
+        String equipo1 = teclat.nextLine();
+        System.out.println("Nombre equipo 2 (String)");
+        String equipo2 = teclat.nextLine();
+
+        // Mostramos los jugadores
+        imprimirJugadoresDeEquipo(database, equipo1);
+        imprimirJugadoresDeEquipo(database, equipo2);
     }
 
 }
